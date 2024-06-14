@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { ThemeProvider, createTheme } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 
 import "@fontsource/ubuntu/400.css";
 import "@fontsource/ubuntu/700.css";
@@ -52,6 +52,12 @@ function customTheme() {
         main: grey[100],
         dark: grey[200],
         contrastText: "black",
+      },
+      red: {
+        light: red[700],
+        main: red[900],
+        dark: red[800],
+        contrastText: "white",
       },
     },
   });

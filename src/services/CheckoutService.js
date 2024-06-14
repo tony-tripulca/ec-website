@@ -13,4 +13,21 @@ export default {
       },
     });
   },
+  purchase: (email) => {
+    return axios({
+      method: "POST",
+      baseURL: url,
+      url: `/store/orders/purchase`,
+      params: {
+        email: email,
+      },
+    });
+  },
+  remove: (uid) => {
+    return axios({
+      method: "DELETE",
+      baseURL: url,
+      url: `/store/orders/${uid}`,
+    });
+  },
 };

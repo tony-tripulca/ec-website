@@ -1,0 +1,27 @@
+#nav-main {
+  padding-top: 32px;
+
+  .nav-main-holder {
+    .MuiList-root {
+      display: flex;
+
+      .MuiMenuItem-root {
+        a {
+          text-decoration: none;
+          color: black;
+        }
+      }
+
+      &.settings {
+        justify-content: space-between;
+
+        .MuiMenuItem-root {
+          padding: 0;
+        }
+        .MuiButton-root {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}

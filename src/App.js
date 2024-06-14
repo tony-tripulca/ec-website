@@ -41,17 +41,17 @@ function customTheme() {
       fontWeightBold: 700,
     },
     palette: {
-      white: {
-        light: grey[50],
-        main: grey[100],
-        dark: grey[200],
-        contrastText: "black",
-      },
-      black: {
+      primary: {
         light: grey[700],
         main: grey[900],
         dark: grey[800],
         contrastText: "white",
+      },
+      secondary: {
+        light: grey[50],
+        main: grey[100],
+        dark: grey[200],
+        contrastText: "black",
       },
     },
   });

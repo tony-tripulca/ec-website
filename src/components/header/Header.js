@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
+  Alert,
   Box,
   Button,
   Container,
   Grid,
   MenuItem,
   MenuList,
+  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
@@ -15,10 +17,30 @@ import {
 import "./Header.scss";
 
 export default function Header() {
+  const [snackbar, setSnackbar] = useState({
+    x: "left",
+    y: "top",
+    open: false,
+    duration: 6000,
+    text: "",
+    severity: "succes",
+  });
+
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    setEmail(localStorage.getItem("email") || "");
+    let _email = localStorage.getItem("email");
+
+    if (_email) {
+      setEmail(_email);
+    } else {
+      setSnackbar((snackbar) => ({
+        ...snackbar,
+        open: true,
+        text: "Please update your email",
+        severity: "error",
+      }));
+    }
   }, []);
 
   return (
@@ -30,6 +52,7 @@ export default function Header() {
               <MenuList className="settings">
                 <MenuItem>
                   <TextField
+                    type="email"
                     label="Your email address"
                     size="small"
                     value={email}
@@ -57,6 +80,21 @@ export default function Header() {
           </Grid>
         </Container>
       </Box>
+      <Snackbar
+        anchorOrigin={{ vertical: snackbar.y, horizontal: snackbar.x }}
+        autoHideDuration={snackbar.duration}
+        open={snackbar.open}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      >
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.text}
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 }

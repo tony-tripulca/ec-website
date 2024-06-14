@@ -15,10 +15,10 @@ import {
 import "./Header.scss";
 
 export default function Header() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    setUsername(localStorage.getItem("username"));
+    setEmail(localStorage.getItem("email") || "");
   }, []);
 
   return (
@@ -30,12 +30,12 @@ export default function Header() {
               <MenuList className="settings">
                 <MenuItem>
                   <TextField
-                    label="Username"
+                    label="Your email address"
                     size="small"
-                    value={username}
+                    value={email}
                     onChange={(event) => {
-                      setUsername(event.target.value);
-                      localStorage.setItem("username", event.target.value);
+                      setEmail(event.target.value);
+                      localStorage.setItem("email", event.target.value);
                     }}
                   />
                 </MenuItem>

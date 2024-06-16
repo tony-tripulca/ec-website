@@ -10,4 +10,11 @@ export default {
       url: `/store/catalogs`,
     });
   },
+  read: (uid) => {
+    return axios({
+      method: "GET",
+      baseURL: url,
+      url: `/store/catalogs/${uid}`,
+    });
+  },
 };

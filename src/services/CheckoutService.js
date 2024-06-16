@@ -13,12 +13,20 @@ export default {
       },
     });
   },
+  create: (data) => {
+    return axios({
+      method: "POST",
+      baseURL: url,
+      url: `/store/orders`,
+      data: data,
+    });
+  },
   purchase: (email) => {
     return axios({
       method: "POST",
       baseURL: url,
       url: `/store/orders/purchase`,
-      params: {
+      data: {
         email: email,
       },
     });

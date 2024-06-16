@@ -50,7 +50,7 @@ export default function Header() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <MenuList className="settings">
-                <MenuItem>
+                <MenuItem disableRipple>
                   <TextField
                     type="email"
                     label="Your email address"

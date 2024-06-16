@@ -1,7 +1,6 @@
 import axios from "axios";
 
-// const url = "http://nadescrib.com:8011";
-const url = "http://localhost:8011";
+const url = "http://nadescrib.com:8011";
 
 export default {
   list: () => {

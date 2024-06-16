@@ -1,6 +1,5 @@
 #store-front {
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-bottom: 64px;
 
   .store-front-holder {
     .section-title {
@@ -25,12 +24,19 @@
         }
       }
 
-      .MuiButton-root {
-        display: block;
-        width: 128px;
-        margin-top: 16px;
-        margin-left: auto;
-        text-align: center;
+      .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+
+        .MuiButton-root.btn {
+          display: block;
+          margin-top: 16px;
+          text-align: center;
+
+          &-remove {
+            margin-right: 8px;
+          }
+        }
       }
     }
   }

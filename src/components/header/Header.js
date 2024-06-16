@@ -16,7 +16,7 @@ import {
 
 import "./Header.scss";
 
-export default function Header() {
+export default function Header({ onStateChange = () => {} }) {
   const [snackbar, setSnackbar] = useState({
     x: "left",
     y: "top",
@@ -26,6 +26,7 @@ export default function Header() {
     severity: "succes",
   });
 
+  const [admin, setAdmin] = useState(false);
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -42,6 +43,10 @@ export default function Header() {
       }));
     }
   }, []);
+
+  useEffect(() => {
+    onStateChange(admin);
+  }, [admin]);
 
   return (
     <React.Fragment>
@@ -63,7 +68,9 @@ export default function Header() {
                   />
                 </MenuItem>
                 <MenuItem disableRipple>
-                  <Button variant="outlined">Switch to admin</Button>
+                  <Button variant="outlined" onClick={() => setAdmin(!admin)}>
+                    Switch to {!admin ? "admin" : "guest"}
+                  </Button>
                 </MenuItem>
               </MenuList>
             </Grid>

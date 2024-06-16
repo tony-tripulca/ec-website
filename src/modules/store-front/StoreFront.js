@@ -9,6 +9,7 @@ import {
   Grid,
   Paper,
   Snackbar,
+  TextField,
   Typography,
 } from "@mui/material";
 
@@ -27,7 +28,13 @@ export default function StoreFront() {
     severity: "succes",
   });
 
+  const [admin, setAdmin] = useState(false);
   const [catalogs, setCatalogs] = useState([]);
+  const [catalog, setCatalog] = useState({
+    name: "",
+    description: "",
+    amount: "",
+  });
 
   const handleListCatalog = useCallback(() => {
     CatalogService.list()
@@ -44,16 +51,91 @@ export default function StoreFront() {
       });
   }, []);
 
+  const handleRemoveCatalog = (uid) => {
+    CatalogService.remove(uid)
+      .then(() => {
+        handleListCatalog();
+      })
+      .catch((error) => {
+        setSnackbar((snackbar) => ({
+          ...snackbar,
+          open: true,
+          text: "Oops! Something went wrong",
+          severity: "error",
+        }));
+      });
+  };
+
+  const handleCreateCatalog = () => {
+    CatalogService.create(catalog)
+      .then(() => {
+        handleListCatalog();
+      })
+      .catch((error) => {
+        setSnackbar((snackbar) => ({
+          ...snackbar,
+          open: true,
+          text: "Oops! Something went wrong",
+          severity: "error",
+        }));
+      });
+  };
+
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    setCatalog((catalog) => ({ ...catalog, [name]: value }));
+  };
+
   useEffect(() => {
     handleListCatalog();
   }, [handleListCatalog]);
 
   return (
     <React.Fragment>
-      <Header />
+      <Header onStateChange={(state) => setAdmin(state)} />
       <Box component={"section"} id="store-front">
         <Container maxWidth="xl" className="store-front-holder">
-          <Grid container spacing={2}>
+          {admin && (
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography className="section-title">Add Product</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Name"
+                  name="name"
+                  vaue={catalog.name}
+                  onChange={(event) => handleOnChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Description"
+                  name="description"
+                  vaue={catalog.description}
+                  onChange={(event) => handleOnChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Amount"
+                  name="amount"
+                  vaue={catalog.amount}
+                  onChange={(event) => handleOnChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={() => handleCreateCatalog()}
+                >
+                  Add
+                </Button>
+              </Grid>
+            </Grid>
+          )}
+          <Grid container spacing={2} mt={2}>
             <Grid item xs={12}>
               <Typography className="section-title">Products</Typography>
             </Grid>
@@ -63,13 +145,27 @@ export default function StoreFront() {
                   <Typography>{i.name}</Typography>
                   <Typography>{i.description}</Typography>
                   <Typography>${i.amount}</Typography>
-                  <Button
-                    component={Link}
-                    to={`/catalog-details/${i._id}`}
-                    variant="contained"
-                  >
-                    Details
-                  </Button>
+                  <Box className="action-buttons">
+                    {admin && (
+                      <Button
+                        variant="contained"
+                        color="red"
+                        onClick={() => handleRemoveCatalog(i._id)}
+                        className="btn btn-remove"
+                      >
+                        Remove
+                      </Button>
+                    )}
+
+                    <Button
+                      component={Link}
+                      to={`/catalog-details/${i._id}`}
+                      variant="contained"
+                      className="btn btn-details"
+                    >
+                      Details
+                    </Button>
+                  </Box>
                 </Paper>
               </Grid>
             ))}
